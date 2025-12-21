@@ -1,0 +1,588 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Updated to cosmic theme with specific color palette */
+    --background: 215 30% 5%; /* Deep space black #0b0f14 */
+    --foreground: 240 10% 98%;
+    --card: 215 25% 8%;
+    --card-foreground: 240 10% 98%;
+    --popover: 215 30% 5%;
+    --popover-foreground: 240 10% 98%;
+    --primary: 234 95% 58%; /* Indigo #2a2bf7 */
+    --primary-foreground: 240 10% 98%;
+    --secondary: 215 20% 12%;
+    --secondary-foreground: 240 10% 98%;
+    --muted: 215 20% 12%;
+    --muted-foreground: 234 10% 65%;
+    --accent: 198 100% 50%; /* Cyan #00b7ff */
+    --accent-foreground: 240 10% 98%;
+    --violet: 262 100% 65%; /* Violet #8b49ff */
+    --lavender: 261 100% 85%; /* Lavender #c9b5ff */
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 240 10% 98%;
+    --border: 215 20% 15%;
+    --input: 215 20% 15%;
+    --ring: 234 95% 58%;
+    --radius: 0.75rem;
+
+    /* Motion variables */
+    --duration-fast: 180ms;
+    --duration-normal: 550ms;
+    --duration-slow: 6s;
+    --easing-smooth: cubic-bezier(0.22, 0.9, 0.28, 1);
+    --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Spacing variables */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background: #0b0f14;
+  }
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+* {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations for scroll-triggered effects */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in-left {
+  animation: fade-in-left 0.8s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.6s ease-out forwards;
+}
+
+.animate-slide-in-bottom {
+  animation: slide-in-bottom 0.8s ease-out forwards;
+}
+
+/* Enhanced starfield with subtle twinkle, opacity range 0.12-0.22 */
+.stars,
+.stars2,
+.stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.stars::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(1.5px 1.5px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 60px 70px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 50px 50px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 90px 10px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 140px 120px, rgba(255, 255, 255, 0.7), transparent);
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  animation: stars-move 120s linear infinite, twinkle-1 4s ease-in-out infinite;
+  opacity: 0.2;
+}
+
+.stars2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(1px 1px at 40px 60px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 110px 90px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 190px 150px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 80px 130px, rgba(255, 255, 255, 0.6), transparent);
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  animation: stars-move 180s linear infinite, twinkle-2 5s ease-in-out infinite 1.5s;
+  opacity: 0.16;
+}
+
+.stars3::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(0.8px 0.8px at 70px 100px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(0.8px 0.8px at 150px 50px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(0.8px 0.8px at 200px 140px, rgba(255, 255, 255, 0.5), transparent);
+  background-repeat: repeat;
+  background-size: 280px 280px;
+  animation: stars-move 240s linear infinite, twinkle-3 6s ease-in-out infinite 3s;
+  opacity: 0.12;
+}
+
+@keyframes stars-move {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-280px);
+  }
+}
+
+@keyframes twinkle-1 {
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  50% {
+    opacity: 0.22;
+  }
+}
+
+@keyframes twinkle-2 {
+  0%,
+  100% {
+    opacity: 0.14;
+  }
+  50% {
+    opacity: 0.18;
+  }
+}
+
+@keyframes twinkle-3 {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.16;
+  }
+}
+
+/* Crisp layered orb with SVG-style radial gradients, exact timing (pulse 6s, rotation 35s) */
+.orb-container {
+  width: 450px;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+}
+
+.orb {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Orbital glow behind text with slow rotation */
+.orbital-glow {
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    transparent 30%,
+    rgba(42, 43, 247, 0.15) 45%,
+    rgba(139, 73, 255, 0.12) 60%,
+    transparent 75%
+  );
+  animation: orbital-rotate 25s linear infinite;
+  filter: blur(35px);
+  z-index: -1;
+}
+
+@keyframes orbital-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orb-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(42, 43, 247, 0.6) 0%,
+    rgba(139, 73, 255, 0.4) 40%,
+    rgba(0, 183, 255, 0.2) 70%,
+    transparent 85%
+  );
+  filter: blur(45px);
+  animation: pulse 6s ease-in-out infinite;
+}
+
+.orb-inner {
+  position: absolute;
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(42, 43, 247, 0.5) 0%,
+    rgba(139, 73, 255, 0.45) 30%,
+    rgba(0, 183, 255, 0.35) 55%,
+    rgba(139, 73, 255, 0.25) 80%,
+    rgba(42, 43, 247, 0.15) 100%
+  );
+  box-shadow:
+    inset 0 0 70px rgba(42, 43, 247, 0.7),
+    inset 0 0 110px rgba(139, 73, 255, 0.5),
+    inset -25px -25px 70px rgba(0, 183, 255, 0.4),
+    0 0 70px rgba(42, 43, 247, 0.5),
+    0 0 110px rgba(139, 73, 255, 0.3);
+  animation: inner-glow 8s ease-in-out infinite;
+}
+
+.orb-ring {
+  position: absolute;
+  width: 112%;
+  height: 112%;
+  border-radius: 50%;
+  border: 2px solid rgba(42, 43, 247, 0.5);
+  box-shadow: 0 0 25px rgba(42, 43, 247, 0.7), inset 0 0 15px rgba(42, 43, 247, 0.3);
+  animation: ring-rotate 35s linear infinite, ring-pulse 6s ease-in-out infinite;
+}
+
+.orb-ring-2 {
+  position: absolute;
+  width: 130%;
+  height: 130%;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 183, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 183, 255, 0.6), inset 0 0 10px rgba(0, 183, 255, 0.2);
+  animation: ring-rotate 45s linear infinite reverse, ring-pulse 7s ease-in-out infinite 0.8s;
+}
+
+.orb-ring-3 {
+  position: absolute;
+  width: 145%;
+  height: 145%;
+  border-radius: 50%;
+  border: 1px solid rgba(139, 73, 255, 0.3);
+  box-shadow: 0 0 15px rgba(139, 73, 255, 0.5);
+  animation: ring-rotate 55s linear infinite, ring-pulse 8s ease-in-out infinite 1.5s;
+}
+
+.orb-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 22% 28%, rgba(255, 255, 255, 0.95) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 78% 35%, rgba(42, 43, 247, 0.8) 2px, transparent 2px),
+    radial-gradient(circle at 48% 68%, rgba(139, 73, 255, 0.75) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 28% 78%, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
+    radial-gradient(circle at 72% 18%, rgba(0, 183, 255, 0.8) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 58% 88%, rgba(201, 181, 255, 0.7) 1px, transparent 1px),
+    radial-gradient(circle at 15% 52%, rgba(42, 43, 247, 0.7) 1px, transparent 1px),
+    radial-gradient(circle at 85% 62%, rgba(139, 73, 255, 0.75) 1.5px, transparent 1.5px);
+  animation: particles-float 15s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes inner-glow {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 70px rgba(42, 43, 247, 0.7),
+      inset 0 0 110px rgba(139, 73, 255, 0.5),
+      inset -25px -25px 70px rgba(0, 183, 255, 0.4),
+      0 0 70px rgba(42, 43, 247, 0.5);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 90px rgba(42, 43, 247, 0.9),
+      inset 0 0 130px rgba(139, 73, 255, 0.7),
+      inset -25px -25px 90px rgba(0, 183, 255, 0.6),
+      0 0 90px rgba(42, 43, 247, 0.7);
+  }
+}
+
+@keyframes ring-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ring-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    border-width: 2px;
+  }
+  50% {
+    opacity: 0.8;
+    border-width: 2.5px;
+  }
+}
+
+@keyframes particles-float {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.18);
+  }
+}
+
+/* Fade-up animation for scroll reveals, duration 550ms with smooth easing */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up var(--duration-normal) var(--easing-smooth) forwards;
+}
+
+/* Glassmorphism cards with 0.6 opacity, gentle blur, hover lift scale 1.03, soft neon border */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--duration-fast) ease-out;
+  opacity: 0.6;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(42, 43, 247, 0.4), rgba(0, 183, 255, 0.35), rgba(139, 73, 255, 0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--duration-fast) ease-out;
+}
+
+.glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, rgba(42, 43, 247, 0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--duration-fast) ease-out;
+}
+
+.glass-card:hover {
+  transform: scale(1.03) translateY(-4px);
+  opacity: 1;
+  box-shadow: 0 8px 40px rgba(42, 43, 247, 0.35), 0 4px 70px rgba(0, 183, 255, 0.25), inset 0 0 35px
+    rgba(42, 43, 247, 0.12);
+  border-color: rgba(42, 43, 247, 0.5);
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+/* Enhanced focus styles for 4.5:1 contrast accessibility */
+*:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2.5px solid hsl(var(--primary));
+  outline-offset: 4px;
+}
+
+/* Subtle parallax effect */
+.parallax-layer {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Responsive orb sizing */
+@media (max-width: 768px) {
+  .orb-container {
+    width: 320px;
+    height: 320px;
+  }
+
+  .orb {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orb-container {
+    width: 240px;
+    height: 240px;
+  }
+
+  .orb {
+    width: 180px;
+    height: 180px;
+  }
+}
